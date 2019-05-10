@@ -7,9 +7,8 @@ import (
 	encoding_binary "encoding/binary"
 	fmt "fmt"
 	v1 "github.com/census-instrumentation/opencensus-proto/gen-go/resource/v1"
+	types "github.com/gogo/protobuf/types"
 	proto "github.com/golang/protobuf/proto"
-	timestamp "github.com/golang/protobuf/ptypes/timestamp"
-	wrappers "github.com/golang/protobuf/ptypes/wrappers"
 	io "io"
 	math "math"
 )
@@ -317,7 +316,7 @@ type TimeSeries struct {
 	// was reset to zero. Exclusive. The cumulative value is over the time interval
 	// (start_timestamp, timestamp]. If not specified, the backend can use the
 	// previous recorded value.
-	StartTimestamp *timestamp.Timestamp `protobuf:"bytes,1,opt,name=start_timestamp,json=startTimestamp,proto3" json:"start_timestamp,omitempty"`
+	StartTimestamp *types.Timestamp `protobuf:"bytes,1,opt,name=start_timestamp,json=startTimestamp,proto3" json:"start_timestamp,omitempty"`
 	// The set of label values that uniquely identify this timeseries. Applies to
 	// all points. The order of label values must match that of label keys in the
 	// metric descriptor.
@@ -363,7 +362,7 @@ func (m *TimeSeries) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_TimeSeries proto.InternalMessageInfo
 
-func (m *TimeSeries) GetStartTimestamp() *timestamp.Timestamp {
+func (m *TimeSeries) GetStartTimestamp() *types.Timestamp {
 	if m != nil {
 		return m.StartTimestamp
 	}
@@ -446,7 +445,7 @@ func (m *LabelValue) GetHasValue() bool {
 type Point struct {
 	// The moment when this point was recorded. Inclusive.
 	// If not specified, the timestamp will be decided by the backend.
-	Timestamp *timestamp.Timestamp `protobuf:"bytes,1,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Timestamp *types.Timestamp `protobuf:"bytes,1,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	// The actual point value.
 	//
 	// Types that are valid to be assigned to Value:
@@ -524,7 +523,7 @@ func (m *Point) GetValue() isPoint_Value {
 	return nil
 }
 
-func (m *Point) GetTimestamp() *timestamp.Timestamp {
+func (m *Point) GetTimestamp() *types.Timestamp {
 	if m != nil {
 		return m.Timestamp
 	}
@@ -1016,7 +1015,7 @@ type DistributionValue_Exemplar struct {
 	// belongs to.
 	Value float64 `protobuf:"fixed64,1,opt,name=value,proto3" json:"value,omitempty"`
 	// The observation (sampling) time of the above value.
-	Timestamp *timestamp.Timestamp `protobuf:"bytes,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Timestamp *types.Timestamp `protobuf:"bytes,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	// Contextual information about the example value.
 	Attachments          map[string]string `protobuf:"bytes,3,rep,name=attachments,proto3" json:"attachments,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
@@ -1064,7 +1063,7 @@ func (m *DistributionValue_Exemplar) GetValue() float64 {
 	return 0
 }
 
-func (m *DistributionValue_Exemplar) GetTimestamp() *timestamp.Timestamp {
+func (m *DistributionValue_Exemplar) GetTimestamp() *types.Timestamp {
 	if m != nil {
 		return m.Timestamp
 	}
@@ -1082,11 +1081,11 @@ func (m *DistributionValue_Exemplar) GetAttachments() map[string]string {
 type SummaryValue struct {
 	// The total number of recorded values since start_time. Optional since
 	// some systems don't expose this.
-	Count *wrappers.Int64Value `protobuf:"bytes,1,opt,name=count,proto3" json:"count,omitempty"`
+	Count *types.Int64Value `protobuf:"bytes,1,opt,name=count,proto3" json:"count,omitempty"`
 	// The total sum of recorded values since start_time. Optional since some
 	// systems don't expose this. If count is zero then this field must be zero.
 	// This field must be unset if the sum is not available.
-	Sum *wrappers.DoubleValue `protobuf:"bytes,2,opt,name=sum,proto3" json:"sum,omitempty"`
+	Sum *types.DoubleValue `protobuf:"bytes,2,opt,name=sum,proto3" json:"sum,omitempty"`
 	// Values calculated over an arbitrary time window.
 	Snapshot             *SummaryValue_Snapshot `protobuf:"bytes,3,opt,name=snapshot,proto3" json:"snapshot,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}               `json:"-"`
@@ -1127,14 +1126,14 @@ func (m *SummaryValue) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_SummaryValue proto.InternalMessageInfo
 
-func (m *SummaryValue) GetCount() *wrappers.Int64Value {
+func (m *SummaryValue) GetCount() *types.Int64Value {
 	if m != nil {
 		return m.Count
 	}
 	return nil
 }
 
-func (m *SummaryValue) GetSum() *wrappers.DoubleValue {
+func (m *SummaryValue) GetSum() *types.DoubleValue {
 	if m != nil {
 		return m.Sum
 	}
@@ -1153,11 +1152,11 @@ func (m *SummaryValue) GetSnapshot() *SummaryValue_Snapshot {
 type SummaryValue_Snapshot struct {
 	// The number of values in the snapshot. Optional since some systems don't
 	// expose this.
-	Count *wrappers.Int64Value `protobuf:"bytes,1,opt,name=count,proto3" json:"count,omitempty"`
+	Count *types.Int64Value `protobuf:"bytes,1,opt,name=count,proto3" json:"count,omitempty"`
 	// The sum of values in the snapshot. Optional since some systems don't
 	// expose this. If count is zero then this field must be zero or not set
 	// (if not supported).
-	Sum *wrappers.DoubleValue `protobuf:"bytes,2,opt,name=sum,proto3" json:"sum,omitempty"`
+	Sum *types.DoubleValue `protobuf:"bytes,2,opt,name=sum,proto3" json:"sum,omitempty"`
 	// A list of values at different percentiles of the distribution calculated
 	// from the current snapshot. The percentiles must be strictly increasing.
 	PercentileValues     []*SummaryValue_Snapshot_ValueAtPercentile `protobuf:"bytes,3,rep,name=percentile_values,json=percentileValues,proto3" json:"percentile_values,omitempty"`
@@ -1199,14 +1198,14 @@ func (m *SummaryValue_Snapshot) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_SummaryValue_Snapshot proto.InternalMessageInfo
 
-func (m *SummaryValue_Snapshot) GetCount() *wrappers.Int64Value {
+func (m *SummaryValue_Snapshot) GetCount() *types.Int64Value {
 	if m != nil {
 		return m.Count
 	}
 	return nil
 }
 
-func (m *SummaryValue_Snapshot) GetSum() *wrappers.DoubleValue {
+func (m *SummaryValue_Snapshot) GetSum() *types.DoubleValue {
 	if m != nil {
 		return m.Sum
 	}
@@ -2991,7 +2990,7 @@ func (m *TimeSeries) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.StartTimestamp == nil {
-				m.StartTimestamp = &timestamp.Timestamp{}
+				m.StartTimestamp = &types.Timestamp{}
 			}
 			if err := m.StartTimestamp.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -3255,7 +3254,7 @@ func (m *Point) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Timestamp == nil {
-				m.Timestamp = &timestamp.Timestamp{}
+				m.Timestamp = &types.Timestamp{}
 			}
 			if err := m.Timestamp.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -3928,7 +3927,7 @@ func (m *DistributionValue_Exemplar) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Timestamp == nil {
-				m.Timestamp = &timestamp.Timestamp{}
+				m.Timestamp = &types.Timestamp{}
 			}
 			if err := m.Timestamp.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -4145,7 +4144,7 @@ func (m *SummaryValue) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Count == nil {
-				m.Count = &wrappers.Int64Value{}
+				m.Count = &types.Int64Value{}
 			}
 			if err := m.Count.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -4181,7 +4180,7 @@ func (m *SummaryValue) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Sum == nil {
-				m.Sum = &wrappers.DoubleValue{}
+				m.Sum = &types.DoubleValue{}
 			}
 			if err := m.Sum.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -4307,7 +4306,7 @@ func (m *SummaryValue_Snapshot) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Count == nil {
-				m.Count = &wrappers.Int64Value{}
+				m.Count = &types.Int64Value{}
 			}
 			if err := m.Count.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -4343,7 +4342,7 @@ func (m *SummaryValue_Snapshot) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Sum == nil {
-				m.Sum = &wrappers.DoubleValue{}
+				m.Sum = &types.DoubleValue{}
 			}
 			if err := m.Sum.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err

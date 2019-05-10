@@ -7,9 +7,8 @@ import (
 	encoding_binary "encoding/binary"
 	fmt "fmt"
 	v1 "github.com/census-instrumentation/opencensus-proto/gen-go/resource/v1"
+	types "github.com/gogo/protobuf/types"
 	proto "github.com/golang/protobuf/proto"
-	timestamp "github.com/golang/protobuf/ptypes/timestamp"
-	wrappers "github.com/golang/protobuf/ptypes/wrappers"
 	io "io"
 	math "math"
 )
@@ -188,7 +187,7 @@ type Span struct {
 	// keep end_time > start_time for consistency.
 	//
 	// This field is required.
-	StartTime *timestamp.Timestamp `protobuf:"bytes,5,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	StartTime *types.Timestamp `protobuf:"bytes,5,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
 	// The end time of the span. On the client side, this is the time kept by
 	// the local machine where the span execution ends. On the server side, this
 	// is the time when the server application handler stops running.
@@ -198,7 +197,7 @@ type Span struct {
 	// keep end_time > start_time for consistency.
 	//
 	// This field is required.
-	EndTime *timestamp.Timestamp `protobuf:"bytes,6,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
+	EndTime *types.Timestamp `protobuf:"bytes,6,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
 	// A set of attributes on the span.
 	Attributes *Span_Attributes `protobuf:"bytes,7,opt,name=attributes,proto3" json:"attributes,omitempty"`
 	// A stack trace captured at the start of the span.
@@ -220,13 +219,13 @@ type Span struct {
 	// to the same process as the current span. This flag is most commonly
 	// used to indicate the need to adjust time as clocks in different
 	// processes may not be synchronized.
-	SameProcessAsParentSpan *wrappers.BoolValue `protobuf:"bytes,12,opt,name=same_process_as_parent_span,json=sameProcessAsParentSpan,proto3" json:"same_process_as_parent_span,omitempty"`
+	SameProcessAsParentSpan *types.BoolValue `protobuf:"bytes,12,opt,name=same_process_as_parent_span,json=sameProcessAsParentSpan,proto3" json:"same_process_as_parent_span,omitempty"`
 	// An optional number of child spans that were generated while this span
 	// was active. If set, allows an implementation to detect missing child spans.
-	ChildSpanCount       *wrappers.UInt32Value `protobuf:"bytes,13,opt,name=child_span_count,json=childSpanCount,proto3" json:"child_span_count,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
-	XXX_unrecognized     []byte                `json:"-"`
-	XXX_sizecache        int32                 `json:"-"`
+	ChildSpanCount       *types.UInt32Value `protobuf:"bytes,13,opt,name=child_span_count,json=childSpanCount,proto3" json:"child_span_count,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
 }
 
 func (m *Span) Reset()         { *m = Span{} }
@@ -304,14 +303,14 @@ func (m *Span) GetKind() Span_SpanKind {
 	return Span_SPAN_KIND_UNSPECIFIED
 }
 
-func (m *Span) GetStartTime() *timestamp.Timestamp {
+func (m *Span) GetStartTime() *types.Timestamp {
 	if m != nil {
 		return m.StartTime
 	}
 	return nil
 }
 
-func (m *Span) GetEndTime() *timestamp.Timestamp {
+func (m *Span) GetEndTime() *types.Timestamp {
 	if m != nil {
 		return m.EndTime
 	}
@@ -360,14 +359,14 @@ func (m *Span) GetResource() *v1.Resource {
 	return nil
 }
 
-func (m *Span) GetSameProcessAsParentSpan() *wrappers.BoolValue {
+func (m *Span) GetSameProcessAsParentSpan() *types.BoolValue {
 	if m != nil {
 		return m.SameProcessAsParentSpan
 	}
 	return nil
 }
 
-func (m *Span) GetChildSpanCount() *wrappers.UInt32Value {
+func (m *Span) GetChildSpanCount() *types.UInt32Value {
 	if m != nil {
 		return m.ChildSpanCount
 	}
@@ -557,7 +556,7 @@ func (m *Span_Attributes) GetDroppedAttributesCount() int32 {
 // A time-stamped annotation or message event in the Span.
 type Span_TimeEvent struct {
 	// The time the event occurred.
-	Time *timestamp.Timestamp `protobuf:"bytes,1,opt,name=time,proto3" json:"time,omitempty"`
+	Time *types.Timestamp `protobuf:"bytes,1,opt,name=time,proto3" json:"time,omitempty"`
 	// A `TimeEvent` can contain either an `Annotation` object or a
 	// `MessageEvent` object, but not both.
 	//
@@ -626,7 +625,7 @@ func (m *Span_TimeEvent) GetValue() isSpan_TimeEvent_Value {
 	return nil
 }
 
-func (m *Span_TimeEvent) GetTime() *timestamp.Timestamp {
+func (m *Span_TimeEvent) GetTime() *types.Timestamp {
 	if m != nil {
 		return m.Time
 	}
@@ -3460,7 +3459,7 @@ func (m *Span) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.StartTime == nil {
-				m.StartTime = &timestamp.Timestamp{}
+				m.StartTime = &types.Timestamp{}
 			}
 			if err := m.StartTime.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -3496,7 +3495,7 @@ func (m *Span) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.EndTime == nil {
-				m.EndTime = &timestamp.Timestamp{}
+				m.EndTime = &types.Timestamp{}
 			}
 			if err := m.EndTime.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -3712,7 +3711,7 @@ func (m *Span) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.SameProcessAsParentSpan == nil {
-				m.SameProcessAsParentSpan = &wrappers.BoolValue{}
+				m.SameProcessAsParentSpan = &types.BoolValue{}
 			}
 			if err := m.SameProcessAsParentSpan.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -3748,7 +3747,7 @@ func (m *Span) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.ChildSpanCount == nil {
-				m.ChildSpanCount = &wrappers.UInt32Value{}
+				m.ChildSpanCount = &types.UInt32Value{}
 			}
 			if err := m.ChildSpanCount.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -4337,7 +4336,7 @@ func (m *Span_TimeEvent) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Time == nil {
-				m.Time = &timestamp.Timestamp{}
+				m.Time = &types.Timestamp{}
 			}
 			if err := m.Time.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
