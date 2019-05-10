@@ -6,8 +6,8 @@ package v1
 import (
 	encoding_binary "encoding/binary"
 	fmt "fmt"
+	types "github.com/gogo/protobuf/types"
 	proto "github.com/golang/protobuf/proto"
-	timestamp "github.com/golang/protobuf/ptypes/timestamp"
 	io "io"
 	math "math"
 )
@@ -641,10 +641,10 @@ type Measurement struct {
 	Value isMeasurement_Value `protobuf_oneof:"value"`
 	// The time when this measurement was recorded. If the implementation uses a async buffer to
 	// record measurements this may be the time when the measurement was read from the buffer.
-	Time                 *timestamp.Timestamp `protobuf:"bytes,5,opt,name=time,proto3" json:"time,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
-	XXX_unrecognized     []byte               `json:"-"`
-	XXX_sizecache        int32                `json:"-"`
+	Time                 *types.Timestamp `protobuf:"bytes,5,opt,name=time,proto3" json:"time,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
 }
 
 func (m *Measurement) Reset()         { *m = Measurement{} }
@@ -731,7 +731,7 @@ func (m *Measurement) GetIntValue() int64 {
 	return 0
 }
 
-func (m *Measurement) GetTime() *timestamp.Timestamp {
+func (m *Measurement) GetTime() *types.Timestamp {
 	if m != nil {
 		return m.Time
 	}
@@ -2516,7 +2516,7 @@ func (m *Measurement) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Time == nil {
-				m.Time = &timestamp.Timestamp{}
+				m.Time = &types.Timestamp{}
 			}
 			if err := m.Time.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err

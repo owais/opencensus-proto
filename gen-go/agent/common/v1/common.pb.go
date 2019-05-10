@@ -5,8 +5,8 @@ package v1
 
 import (
 	fmt "fmt"
+	types "github.com/gogo/protobuf/types"
 	proto "github.com/golang/protobuf/proto"
-	timestamp "github.com/golang/protobuf/ptypes/timestamp"
 	io "io"
 	math "math"
 )
@@ -161,10 +161,10 @@ type ProcessIdentifier struct {
 	// Process id.
 	Pid uint32 `protobuf:"varint,2,opt,name=pid,proto3" json:"pid,omitempty"`
 	// Start time of this ProcessIdentifier. Represented in epoch time.
-	StartTimestamp       *timestamp.Timestamp `protobuf:"bytes,3,opt,name=start_timestamp,json=startTimestamp,proto3" json:"start_timestamp,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
-	XXX_unrecognized     []byte               `json:"-"`
-	XXX_sizecache        int32                `json:"-"`
+	StartTimestamp       *types.Timestamp `protobuf:"bytes,3,opt,name=start_timestamp,json=startTimestamp,proto3" json:"start_timestamp,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
 }
 
 func (m *ProcessIdentifier) Reset()         { *m = ProcessIdentifier{} }
@@ -214,7 +214,7 @@ func (m *ProcessIdentifier) GetPid() uint32 {
 	return 0
 }
 
-func (m *ProcessIdentifier) GetStartTimestamp() *timestamp.Timestamp {
+func (m *ProcessIdentifier) GetStartTimestamp() *types.Timestamp {
 	if m != nil {
 		return m.StartTimestamp
 	}
@@ -1085,7 +1085,7 @@ func (m *ProcessIdentifier) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.StartTimestamp == nil {
-				m.StartTimestamp = &timestamp.Timestamp{}
+				m.StartTimestamp = &types.Timestamp{}
 			}
 			if err := m.StartTimestamp.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
