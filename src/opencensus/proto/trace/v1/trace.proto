@@ -420,3 +420,8 @@ message TruncatableString {
   // value is 0, then the string was not shortened.
   int32 truncated_byte_count = 2;
 }
+
+
+message SpanList {
+    repeated Span spans = 1;
+}
