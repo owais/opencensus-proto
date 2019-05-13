@@ -1,3 +1,3 @@
-module github.com/owais/opencensus-proto
+module github.com/omnition/opencensus-proto
 
 go 1.12
