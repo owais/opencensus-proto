@@ -24,14 +24,14 @@ Mgoogle/protobuf/wrappers.proto=github.com/gogo/protobuf/types"
 ARGS="goproto_registration=true"
 
 
-protoc --gofast_out=$TYPES,$ARGS,plugins=grpc:$OUTDIR opencensus/proto/stats/v1/stats.proto \
-    && protoc --gofast_out=$TYPES,$ARGS,plugins=grpc:$OUTDIR opencensus/proto/metrics/v1/metrics.proto \
-    && protoc --gofast_out=$TYPES,$ARGS,plugins=grpc:$OUTDIR opencensus/proto/resource/v1/resource.proto \
-    && protoc --gofast_out=$TYPES,$ARGS,plugins=grpc:$OUTDIR opencensus/proto/trace/v1/trace.proto \
-    && protoc --gofast_out=$TYPES,$ARGS,plugins=grpc:$OUTDIR opencensus/proto/trace/v1/trace_config.proto \
-    && protoc -I=. --gofast_out=$TYPES,$ARGS,plugins=grpc:$OUTDIR opencensus/proto/agent/common/v1/common.proto \
-    && protoc -I=. --gofast_out=$TYPES,$ARGS,plugins=grpc:$OUTDIR opencensus/proto/agent/metrics/v1/metrics_service.proto \
-    && protoc -I=. --gofast_out=$TYPES,$ARGS,plugins=grpc:$OUTDIR opencensus/proto/agent/trace/v1/trace_service.proto \
+protoc --gogofaster_out=$TYPES,$ARGS,plugins=grpc:$OUTDIR opencensus/proto/stats/v1/stats.proto \
+    && protoc --gogofaster_out=$TYPES,$ARGS,plugins=grpc:$OUTDIR opencensus/proto/metrics/v1/metrics.proto \
+    && protoc --gogofaster_out=$TYPES,$ARGS,plugins=grpc:$OUTDIR opencensus/proto/resource/v1/resource.proto \
+    && protoc --gogofaster_out=$TYPES,$ARGS,plugins=grpc:$OUTDIR opencensus/proto/trace/v1/trace.proto \
+    && protoc --gogofaster_out=$TYPES,$ARGS,plugins=grpc:$OUTDIR opencensus/proto/trace/v1/trace_config.proto \
+    && protoc -I=. --gogofaster_out=$TYPES,$ARGS,plugins=grpc:$OUTDIR opencensus/proto/agent/common/v1/common.proto \
+    && protoc -I=. --gogofaster_out=$TYPES,$ARGS,plugins=grpc:$OUTDIR opencensus/proto/agent/metrics/v1/metrics_service.proto \
+    && protoc -I=. --gogofaster_out=$TYPES,$ARGS,plugins=grpc:$OUTDIR opencensus/proto/agent/trace/v1/trace_service.proto \
     && protoc --grpc-gateway_out=logtostderr=true,grpc_api_configuration=./opencensus/proto/agent/trace/v1/trace_service_http.yaml:$OUTDIR opencensus/proto/agent/trace/v1/trace_service.proto
 
 # Generate OpenApi (Swagger) documentation file for grpc-gateway endpoints.
