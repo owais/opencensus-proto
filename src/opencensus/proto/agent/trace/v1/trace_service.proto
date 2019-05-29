@@ -45,6 +45,8 @@ service TraceService {
   // For performance reasons, it is recommended to keep this RPC
   // alive for the entire life of the application.
   rpc Export(stream ExportTraceServiceRequest) returns (stream ExportTraceServiceResponse) {}
+
+  rpc ExportOne(ExportTraceServiceRequest) returns (ExportTraceServiceResponse) {}
 }
 
 message CurrentLibraryConfig {
